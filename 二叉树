@@ -1,0 +1,79 @@
+#define _CRT_SECURE_NO_WARNINGS 1
+# include <stdio.h>
+#include<malloc.h>
+
+//二叉树的节点定义
+typedef struct BT
+{
+    char data;
+    struct BT* l_chrild;
+    struct BT* r_chrild;
+}BT;
+
+//创建二叉树
+BT* Create_tree()// 创建二叉树
+{
+    BT* bt;
+    char x;
+    scanf("%c", &x);
+    getchar();//清除缓冲区垃圾
+
+    if (x == '#')
+    {
+        bt = NULL;
+    }
+    else
+    {
+        bt = (BT*)malloc(sizeof(BT));
+        bt->data = x;
+
+        printf("请输入 %c 的左子树\n", bt->data);
+        bt->l_chrild = Create_tree();   // 
+
+        printf("请输入 %c 的右子树\n", bt->data);
+        bt->r_chrild = Create_tree();
+    }
+    return bt;
+
+}
+
+//先序遍历
+void pre_order(BT* bt)  // 先序遍历
+{
+    // 体会递归思想：是如何执行的分两次结束，一次是左右孩子为空，或者此程序执行结束。
+    if (bt == NULL)
+        return;
+    else
+    {
+        printf("%c ", bt->data);   // 根
+        pre_order(bt->l_chrild);   // 左
+        pre_order(bt->r_chrild);  // 右
+    }
+}
+
+//中序遍历
+void ln_order(BT* bt)  // 中序遍历
+{
+    if (bt == NULL)
+        return;
+    else
+    {
+        ln_order(bt->l_chrild);   // 左
+        printf("%c ", bt->data); // 根
+        ln_order(bt->r_chrild); // 右
+    }
+}
+
+//后序遍历
+void post_order(BT* bt)  // 后序遍历
+{
+    if (bt == NULL)
+        return;
+    else
+    {
+        post_order(bt->l_chrild);  // 左
+        post_order(bt->r_chrild); // 右
+        printf("%c ", bt->data); // 根
+    }
+}
+
